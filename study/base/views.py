@@ -2,14 +2,38 @@ from django.shortcuts import render, redirect
 from .models import Room, Topic
 from .forms import RoomForm
 from django.db.models import Q
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 # Create your views here.
-#
-# rooms = [
-#     {'id': 1, 'name':'Lets learn django'},
-#     {'id': 2, 'name':'Design with me'},
-#     {'id': 3, 'name':'Frontend developers'},
-# ]
+
+def login_page(request):
+    if request.method =='POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'User does not exist')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Username or password incorrect')
+
+    context = {}
+    return render(request, 'base/login_register.html', context)
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
 
 
 def home(request):
@@ -32,6 +56,8 @@ def room(request, pk):
     context = {'room':room}
     return render(request, 'base/room.html', context)
 
+
+@login_required(login_url='login')
 def create_room(request):
     form = RoomForm
 

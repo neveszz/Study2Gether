@@ -34,3 +34,6 @@ class Message(models.Model):
 
     def __str__(self):
         return f'{self.body[0:30]} - {self.room} '
+
+    class Meta:
+        ordering = ['-updated', '-created']

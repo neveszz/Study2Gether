@@ -8,7 +8,7 @@
                 <span>@{{ room.host.username }}</span>
               </a>
               <div class="roomListRoom__actions">
-                <span>{{ room.created|timesince }} ago</span>
+                <span>{{ room.created|timesince }} ago </span>
               </div>
             </div>
             <div class="roomListRoom__content">
@@ -40,9 +40,9 @@
         {% endfor%}
 
 
-        {% for room in rooms %}
-            <a href="{% url 'user_profile' room.host.id %}">@{{ room.host.username }}</a>
-            <h3> ID: {{ room.id }}   ROOM: <a href="{% url 'room' room.id%}">{{ room.name }}</a>  </h3>
-            <small>{{ room.topic.name }}</small>
-            <hr>
-        {% endfor %}
+<!--        {% for room in rooms %}-->
+<!--            <a href="{% url 'user_profile' room.host.id %}">@{{ room.host.username }}</a>-->
+<!--            <h3> ID: {{ room.id }}   ROOM: <a href="{% url 'room' room.id%}">{{ room.name }}</a>  </h3>-->
+<!--            <small>{{ room.topic.name }}</small>-->
+<!--            <hr>-->
+<!--        {% endfor %}-->

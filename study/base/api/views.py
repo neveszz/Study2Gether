@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from base.models import Room
-from .serializers import RoomSerializer
+from base.models import Room, Message
+from .serializers import RoomSerializer,MessageSerializer
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -25,4 +25,10 @@ def getRooms(request):
 def getRoom(request,pk):
     rooms = Room.objects.get(id=pk)
     serializer = RoomSerializer(rooms, many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getMessages(request):
+    messages = Message.objects.all()
+    serializer = MessageSerializer(messages, many=True)
     return Response(serializer.data)
